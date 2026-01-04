@@ -122,12 +122,33 @@
 | D_URL | https://cloudflare-dns.com/dns-query |❌| DNS解析获取作用，小白勿用                                                           |  |
 
 ## 
-## 🧩六、节点订阅配置  [Vercel部署视频教程](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR) [Cloudfare部署视频教程](https://youtu.be/f8ZTvv4u3Pw)
-
+## ⚙️ Snippets 部署方法 [视频教程](https://www.youtube.com/watch?v=i-XnnP-MptY&t=165s)
 <details>
 <summary>点击展开/收起</summary>
 
+1. 进入 Cloudflare Snippets：
+   - 在 CloudFlare主页的左边菜单的 `域` 选项卡 -> 点击 `域` 菜单 -> 进入到 `域管理` -> 找到已开通**Snippets**的域名点击进入 -> 进入后在左边菜单的 `规则` 选项卡 点击展开 -> 点击 `Snippets` 菜单 -> 进入 `Snippets`片段代码主页面。
+2. 部署 Cloudflare Snippets代码：
+   - 在 `Snippets`片段代码主页面的 右下角方点击 `+创建片段` 图标进入代码编辑页面 -> 在右上方创建片段 -> 填入 `片段名称`(此名称自己命名)。
+   - 将 [_worker.js](https://github.com/amclubs/am-cf-tunnel/blob/main/snippets.js) 的内容粘贴到 `Snippets` 编辑器中 -> 修改第一行代码`id`变量值(默认登录密码(UUID)是：ec872d8f-72b0-4a04-b612-0327d85e18ed) 建议自己要修改 [在线获取UUID](https://1024tools.com/uuid)。
+   - 点击右上方 `片段规则` 图标 -> 选择 `自定义筛选表达式` -> 字段 选择 `主机名` -> 运算符 选择 `运算符` -> 值 填入 `Snippets进入的域名名称，再前面加多一节子域名名称`(子域名名称自己命名) 后 -> 点击 `完成`。(此步已有可忽略)
+   - 在 码编辑页面 右上角方点击 `部署` -> 选择 `创建新代理 DNS 记录` -> 字段 `IPv4 地址（必填）` -> 查看下面显示 `使用 192.0.2.1 放弃请求` -> 显示IP值 填入后 -> 点击 `创建记录和部署规则`。
+3. 验证部署是否成功：
+   - 访问 `https://[YOUR-Snippets-URL]` 即可进入登录页面,登录成功就是完成部署(默认登录密码(UUID)是：ec872d8f-72b0-4a04-b612-0327d85e18ed)。
+   - 例如 `https://vless.amclubss.com` 然后进入登录页面 -> 输入密码 `ec872d8f-72b0-4a04-b612-0327d85e18ed` -> 点击登录 -> 成功登录。 
+4. 订阅连接和节点生成使用方法：  [视频教程](https://www.youtube.com/watch?v=i-XnnP-MptY&t=596s)
+   - 进入 [am-cf-tunnel-sub](https://github.com/amclubs/am-cf-tunnel-sub) 项目 -> 根据项目教程部署和使用。(此步已有可忽略)
+   - 本频道订阅器转换地址：https://sub.amclubss.com
+   
+</details>
+
+## 
+## 🧩六、节点订阅器部署  [Vercel部署视频教程](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR) [Cloudfare部署视频教程](https://youtu.be/f8ZTvv4u3Pw)
+
 #### `①` Vercel方式部署 [视频教程](https://www.youtube.com/watch?v=i-XnnP-MptY&t=596s)
+<details>
+<summary>点击展开/收起</summary>
+
 1. Fork或克隆本仓库[am-cf-tunnel-sub](https://github.com/amclubs/am-cf-tunnel-sub)到您的 GitHub/GitLab 账户
 2. 登录 [Vercel](https://vercel.com)，点击"New Project" <a href="https://www.youtube.com/watch?v=ZxHLLlxuJyI&t=28s">[点击观看注册视频教程]</a>
 3. 导入您的仓库，使用默认设置
@@ -135,8 +156,68 @@
 5. 点击"Deploy"
 
 访问 `http://部署域名` 即可。
+</details>
 
-#### `②` Cloudfare方式部署（Pages GitHub）[视频教程](https://youtu.be/f8ZTvv4u3Pw)
+#### `②` Cloudfare Workers 部署方法 [视频教程](https://www.youtube.com/watch?v=D4XqeRNm2JI&t=501s)
+<details>
+<summary>点击展开/收起</summary>
+
+1. 部署 Cloudflare Worker：
+   - 在 CloudFlare主页的左边菜单的 `计算和AI` 选项卡 -> 点击 `Workers 和 Pages` -> 右上方点击 -> `创建应用程序` -> 选择 `Workers`里的 `从 Hello World! 开始` 点击 `开始使用` -> 填入 `Worker 名称`(此名称自己命名) 后 -> 右下方点击 `部署` 后-> 右上方点击 `断续处理项目`。(此步已有可忽略)。
+2. 设置节点UUID和HOST变量： 
+   - 在 Workers控制台的 `设置` 选项卡 -> 点击 `设置` -> 左方点击 `变量和机密` -> 右方点击  `添加` -> 变量名称 填入 `UUID`(此名称固定不能变) ，值填入CF部署节点ID -> 再点击添加变量 填入 `HOST`(此名称固定不能变)，值填入CF部署的自定义域名 后 -> 右下方点击 `保存` 即可。
+3. 部署 Cloudflare Worker代码：
+   - 在 workers控制台的 右上角方点击 `编辑代码(</>)` 图标进入代码编辑页面。
+   - 将 [_worker.src.js](https://github.com/amclubs/am-cf-tunnel-sub/blob/main/_worker.src.js) 的内容粘贴到 Worker 编辑器中 右上方点击 -> `部署` 完成部署。
+4. 给 workers绑定 自定义域： [免费域名申请教程](https://www.youtube.com/playlist?list=PLGVQi7TjHKXZGODTvB8DEervrmHANQ1AR)
+   - 在 workers控制台的 `设置` 选项卡 -> 点击 `域和路由` -> 右方点击 -> `添加` -> 选择 `自定义域`。
+   - 填入你已转入 CloudFlare 域名 (amclubss.com) 解析服务的次级域名，例如:`sub.amclubss.com`后 点击 `添加域`，等待证书生效即可。
+5. 验证部署是否成功：
+   - 访问 `https://[YOUR-WORKERS-URL]` 即可进入登录页面,登录成功就是完成部署(默认登录密码(UUID)是：ec872d8f-72b0-4a04-b612-0327d85e18ed)。
+   - 例如 `https://sub.amclubss.com` 然后进入登录页面 -> 输入密码 `ec872d8f-72b0-4a04-b612-0327d85e18ed` -> 点击登录 -> 成功登录。 
+6. 修改默认登录密码(ID)变量，(强烈要求修改，防止别人用你节点)： 
+   - 在 Worker代码控制台的 `设置` 选项卡 -> 点击 `设置` -> 左方点击 `变量和机密` -> 右方点击  `添加` -> 变量名称 填入 `ID`(此名称固定不能变) ，自己设置复杂的密码 -> 右下方点击 `保存` 即可。
+   - 保存成功后，原登录密码(ID)已作废不能访问，用新登录密码(ID)登录访问即可。
+7. 增加优选IP(ips)变量，**(要在线优选功能必须配置)**： 
+   - 在 CloudFlare主页的左边菜单的 `存储和数据库` 选项卡 -> 展开选择点击 `Workers KV` -> 右方点击 -> `创建实例(Create Instance)` -> 填入 `命名空间名称`(此名称自己命名) 后 -> 点击 `创建`。(此步已有可忽略)
+   - 在 Pages控制台的 `设置` 选项卡 -> 点击 `绑定` -> 右方点击 -> `添加` -> 选择 `KV 命名空间` -> 变量名称 填入 `ips`(此名称固定不能变) -> KV 命名空间 选择 在上面创建的 `命名空间名称`后 -> 右下方点击 `保存` 即可。
+8. 本频道订阅器转换地址：https://sub.amclubss.com
+
+</details>
+
+#### `③` Cloudfare Pages 上传 部署方法 **(最佳推荐!!!)** [视频教程](https://www.youtube.com/watch?v=D4XqeRNm2JI&t=982s)
+<details>
+<summary>点击展开/收起</summary>
+
+1. 部署 Cloudflare Pages：
+   - 下载 [_worker.src.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-tunnel-sub/main/_worker.src.js.zip) 文件，并点上 Star !!!
+   - 在 CloudFlare主页的左边菜单的 `计算(Workers)` 选项卡 -> 点击 `Workers 和 Pages` -> 右上方点击 -> `创建应用程序` -> 选择 `Pages`里的 `拖放文件` 点击 `开始使用` -> 填入 `项目名称`(此名称自己命名)后 -> 右边点击 `创建项目` 后 -> 下方 `上传您的项目资产` 点击 `拖放或从计算机中选择` 后  -> 点击 `上传压缩文件` 然后上传你下载好的 [_worker.src.js.zip](https://raw.githubusercontent.com/amclubs/am-cf-tunnel-sub/main/_worker.src.js.zip) 文件后点击 `部署站点`。
+2. 设置节点UUID和HOST变量： 
+   - 在 Pages控制台的 `设置` 选项卡 -> 点击 `设置` -> 左方点击 `变量和机密` -> 右方点击  `添加` -> 变量名称 填入 `UUID`(此名称固定不能变) ，值填入CF部署节点ID -> 再点击添加变量 填入 `HOST`(此名称固定不能变)，值填入CF部署的自定义域名 后 -> 右下方点击 `保存`。
+   - 在 `设置` 选项卡，点击 `部署` -> 在所有部署 找到最新一条部署记录 ，在右边点击 3个点 `...` 选择 `重试部署` 即可。
+3. 给 Pages绑定 CNAME自定义域：[无域名绑定Cloudflare部署视频教程]->[免费域名教程1](https://youtu.be/wHJ6TJiCF0s) [免费域名教程2](https://youtu.be/yEF1YoLVmig)  [免费域名教程3](https://www.youtube.com/watch?v=XS0EgqckUKo&t=320s)
+   - 在 Pages控制台的 `自定义域`选项卡，下方点击 `设置自定义域`。
+   - 填入你的自定义次级域名，注意不要使用你的根域名，例如：
+     您分配到的域名是 `amclubss.com`，则添加自定义域填入 `sub.amclubss.com`即可，点击 `激活域`即可。    
+4. 验证部署是否成功：
+   - 访问 `https://[YOUR-WORKERS-URL]` 即可进入登录页面,登录成功就是完成部署(默认登录密码(UUID)是：ec872d8f-72b0-4a04-b612-0327d85e18ed)。
+   - 例如 `https://sub.amclubss.com` 然后进入登录页面 -> 输入密码 `ec872d8f-72b0-4a04-b612-0327d85e18ed` -> 点击登录 -> 成功登录。 
+5. 修改默认登录密码(ID)变量，(强烈要求修改，防止别人用你节点)： 
+   - 在 Pages控制台的 `设置` 选项卡 -> 点击 `设置` -> 左方点击 `变量和机密` -> 右方点击  `添加` -> 变量名称 填入 `ID`(此名称固定不能变) ，自己设置复杂的密码 -> 右下方点击 `保存`。
+   - 在 `设置` 选项卡，点击 `部署` -> 在所有部署 找到最新一条部署记录 ，在右边点击 3个点 `...` 选择 `重试部署` 即可。
+   - 保存成功后，原登录密码(ID)已作废不能访问，用新登录密码(ID)登录访问即可。
+6. 增加优选IP(ips)变量，**(要在线优选功能必须配置)**： 
+   - 在 CloudFlare主页的左边菜单的 `存储和数据库` 选项卡 -> 展开选择点击 `Workers KV` -> 右方点击 -> `创建实例(Create Instance)` -> 填入 `命名空间名称`(此名称自己命名) 后 -> 点击 `创建`。(此步已有可忽略)
+   - 在 Pages控制台的 `设置` 选项卡 -> 点击 `绑定` -> 右方点击 -> `添加` -> 选择 `KV 命名空间` -> 变量名称 填入 `ips`(此名称固定不能变) -> KV 命名空间 选择 在上面创建的 `命名空间名称`后 -> 右下方点击 `保存`。
+   - 在 `设置` 选项卡，点击 `部署` -> 在所有部署 找到最新一条部署记录 ，在右边点击 3个点 `...` 选择 `重试部署` 即可。
+7. 本频道订阅器转换地址：https://sub.amclubss.com
+
+</details>
+
+#### `④` Cloudfare Pages GitHub 部署方法 **(不推荐)** [视频教程](https://www.youtube.com/watch?v=f8ZTvv4u3Pw&t=137s)
+<details>
+<summary>点击展开/收起</summary>
+   
 1. 部署 Cloudflare Pages：
    - 在 Github 上先 Fork 本项目[am-cf-tunnel-sub](https://github.com/amclubs/am-cf-tunnel-sub)，并点上 Star !!!
    - 在 CloudFlare主页的左边菜单的 `计算(Workers)` 选项卡 -> 点击 `Workers 和 Pages` -> 右上方点击 -> `创建应用程序` -> 选择 `Pages`里的 `导入现有 Git 存储库` 点击 `开始使用` -> 选择GitHub 点击`连接GitHub`根据提示授权GitHub和项目(此步已有可忽略)后 -> 选中 `am-cf-tunnel-sub`项目后 -> 点击 `开始设置` -> 可修改`项目名称`(此名称自己命名) 后 -> 右下方点击 `保存并部署`即可。
@@ -154,9 +235,17 @@
    - 在 Pages控制台的 `设置` 选项卡 -> 点击 `设置` -> 左方点击 `变量和机密` -> 右方点击  `添加` -> 变量名称 填入 `ID`(此名称固定不能变) ，自己设置复杂的密码 -> 右下方点击 `保存`。
    - 在 `设置` 选项卡，点击 `部署` -> 在所有部署 找到最新一条部署记录 ，在右边点击 3个点 `...` 选择 `重试部署` 即可。
    - 保存成功后，原登录密码(ID)已作废不能访问，用新登录密码(ID)登录访问即可。
-6. 本频道订阅器转换地址：https://sub.amclubss.com
+6. 增加优选IP(ips)变量，**(要在线优选功能必须配置)**： 
+   - 在 CloudFlare主页的左边菜单的 `存储和数据库` 选项卡 -> 展开选择点击 `Workers KV` -> 右方点击 -> `创建实例(Create Instance)` -> 填入 `命名空间名称`(此名称自己命名) 后 -> 点击 `创建`。(此步已有可忽略)
+   - 在 Pages控制台的 `设置` 选项卡 -> 点击 `绑定` -> 右方点击 -> `添加` -> 选择 `KV 命名空间` -> 变量名称 填入 `ips`(此名称固定不能变) -> KV 命名空间 选择 在上面创建的 `命名空间名称`后 -> 右下方点击 `保存`。
+   - 在 `设置` 选项卡，点击 `部署` -> 在所有部署 找到最新一条部署记录 ，在右边点击 3个点 `...` 选择 `重试部署` 即可。
+7. 本频道订阅器转换地址：https://sub.amclubss.com
 
-7. 变量说明 [视频教程](https://www.youtube.com/watch?v=i-XnnP-MptY&t=808s)
+</details>
+
+🔧变量说明 [视频教程](https://www.youtube.com/watch?v=i-XnnP-MptY&t=808s)
+<details>
+<summary>点击展开/收起</summary>
 
 | 变量名 | 示例 | 必填 | 备注 | YT |
 |-----|-----|-----|-----|-----|
@@ -211,7 +300,7 @@
 
 ###  🌟推荐
 **【流量光】** 中转+专线高速机场 (**9.9元300G每月**) (**75元包年每月300G**) (**55元1000GB不限时**)✅畅爽晚高峰 解锁ChatGPT、全流媒体(送小火箭)
-</br>🌐官网：[https://llgjc1.com](https://llgjc1.com/#/register?code=bIUDEPTu)
+</br>🌐官网：[https://llgjc.org](https://llgjc.org/#/register?code=bIUDEPTu)
 
 # 
 <center>
@@ -233,4 +322,6 @@
  - 1、该项目设计和开发仅供学习、研究和安全测试目的。请于下载后 24 小时内删除, 不得用作任何商业用途, 文字、数据及图片均有所属版权, 如转载须注明来源。
  - 2、使用本程序必循遵守部署服务器所在地区的法律、所在国家和用户所在国家的法律法规。对任何人或团体使用该项目时产生的任何后果由使用者承担。
  - 3、作者不对使用该项目可能引起的任何直接或间接损害负责。作者保留随时更新免责声明的权利，且不另行通知。
- 
+
+## ⭐ Star 星星走起
+[![Stargazers over time](https://starchart.cc/amclubs/am-cf-tunnel.svg?variant=adaptive)](https://starchart.cc/amclubs/am-cf-tunnel)
